@@ -1,0 +1,11 @@
+select * from Student;
+delete from Student where age=101;
+select count(1) from Student;
+insert into Student (NAME, AGE) values('George',34);
+commit;
+CREATE TABLE Student(
+   ID   INT NOT NULL AUTO_INCREMENT,
+   NAME VARCHAR(20) NOT NULL,
+   AGE  INT NOT NULL,
+   PRIMARY KEY (ID)
+);
