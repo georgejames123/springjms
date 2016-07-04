@@ -34,9 +34,7 @@
 	     3. messageListener - the implementation class that will actually handle the incoming messages. The
 	        DeafultMesssageListener takes messages from the queue and passes them to the message listener for
 	        processing. We've defined our message listener above (testMessageListener)
-	     4. concurrentConsumers - this is the number of threads that the DeafultMesaegListenerContainer will
-	        spawn to handle incoming messages. The default is 1 but in our application we'll have 2 separate
-	        threads processing incoming messages.
+	     4. concurrentConsumers - number of threads the DeafultMesaegListenerContainer will spawn to handle incoming messages
 	  -->
 	<bean id="messageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
     	<property name="connectionFactory" ref ="mqConnectionFactory" />
