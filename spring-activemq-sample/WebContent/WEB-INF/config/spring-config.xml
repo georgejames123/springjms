@@ -46,9 +46,8 @@
 		<property name="maxConcurrentConsumers" value="1" />
     </bean>
 
-	<!-- MessageSender is a simple POJO that we supply with a JMSTemplate and
-    	 the Queue that we want to send messages to
-     -->
+	<!-- MessageSender is a simple POJO that we supply with a JMSTemplate and 
+		the Queue that we want to send messages to -->
 	<bean id="testMessageSender" class="com.blog.spring.jms.TestMessageSender">
 		<property name="jmsTemplate" ref="jmsTemplate"/>
 		<property name="testQueue" ref="testQueueTwo"/>
