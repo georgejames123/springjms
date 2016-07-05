@@ -24,7 +24,7 @@
 	<!-- message listener implementation that implements the JMS MessageListener interface and implements the
 		 onMessage method to process incoming messages
 	 -->
-	<bean id="testMessageListener" class="com.blog.spring.jms.TestMessageListener">
+	<bean id="testMessageListener" class="com.dbs.trade.dupcheck.jms.TestMessageListener">
     	<property name="testMessageSender" ref ="testMessageSender" />
     	<property name="studentJDBCTemplate" ref ="studentJDBCTemplate" />
     </bean>
@@ -46,7 +46,7 @@
 
 	<!-- MessageSender is a simple POJO that we supply with a JMSTemplate and 
 		the Queue that we want to send messages to -->
-	<bean id="testMessageSender" class="com.blog.spring.jms.TestMessageSender">
+	<bean id="testMessageSender" class="com.dbs.trade.dupcheck.jms.TestMessageSender">
 		<property name="jmsTemplate" ref="jmsTemplate"/>
 		<property name="testQueue" ref="testQueueTwo"/>
 	</bean>
@@ -59,7 +59,7 @@
 		<property name="connectionFactory" ref="mqConnectionFactory" />
 	</bean>
 
-   <bean id="studentJDBCTemplate" class="com.blog.dataaccess.StudentJDBCTemplate">
+   <bean id="studentJDBCTemplate" class="com.dbs.trade.dupcheck.dataaccess.StudentJDBCTemplate">
       <property name="dataSource" ref="dataSource" />    
    </bean>
 
