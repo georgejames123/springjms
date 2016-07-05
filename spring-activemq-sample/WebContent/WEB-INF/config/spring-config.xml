@@ -13,9 +13,9 @@
 						    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
 
 
-	<!-- Use Springs JNDI support to look up JMS Connection Factory and Queue definitions from the
-	     container. This means that specific connection details are not embedded in the application
-	 -->
+	<!-- Use Springs JNDI support to look up JMS Connection Factory and Queue 
+		definitions from the container. This means that specific connection details 
+		are not embedded in the application -->
 	<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:/ConnectionFactory" />
 	<jee:jndi-lookup id="receiverQ" jndi-name="java:/queue/HELLOWORLDMDBQueue" />
 	<jee:jndi-lookup id="senderQ" jndi-name="java:/queue/HELLOWORLDMDBQueue1" />
@@ -51,10 +51,10 @@
 		<property name="senderQ" ref="senderQ"/>
 	</bean>
 
-	<!-- JMSTemplate is a Spring template that allows us to communicate with
-		 a message broker via JMS. JMSTemplate takes care of boiler plate code such as exception handling
-		 and resource management such as connection pooling. We supply the JMS template with the connection factory mentioned above
-     -->
+	<!-- JMSTemplate is a Spring template that allows us to communicate with 
+		a message broker via JMS. JMSTemplate takes care of boiler plate code such 
+		as exception handling and resource management such as connection pooling. 
+		We supply the JMS template with the connection factory mentioned above -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="mqConnectionFactory" />
 	</bean>
