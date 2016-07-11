@@ -29,7 +29,7 @@ public class FPROMessageListener implements MessageListener {
 	 * this method with the message payload.
 	 */
 	public void onMessage(Message message) {
-		logger.info("Received message from queue [" + message + "]");
+		logger.debug("Received message from queue [" + message + "]");
 
 		/* The message must be of type TextMessage */
 		if (message instanceof TextMessage) {

@@ -19,7 +19,10 @@
 	<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:/ConnectionFactory" />
 	<jee:jndi-lookup id="receiverQ" jndi-name="java:/queue/HELLOWORLDMDBQueue" />
 	<jee:jndi-lookup id="senderQ" jndi-name="java:/queue/HELLOWORLDMDBQueue1" />
+	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/MySqlDS"/>
+	<!--
 	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/MariaDBDS"/>
+	-->
 
 	<!-- message listener implementation that implements the JMS MessageListener interface and implements the
 		 onMessage method to process incoming messages
