@@ -17,9 +17,9 @@
 		definitions from the container. This means that specific connection details 
 		are not embedded in the application -->
 	<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:/ConnectionFactory" />
-	<jee:jndi-lookup id="receiverQ" jndi-name="java:/queue/HELLOWORLDMDBQueue" />
-	<jee:jndi-lookup id="senderQ" jndi-name="java:/queue/HELLOWORLDMDBQueue1" />
-	<jee:jndi-lookup id="IMEXreceiverQ" jndi-name="java:/queue/IMEXReceiveQ" />
+	<jee:jndi-lookup id="fproReceiverQ" jndi-name="java:/queue/HELLOWORLDMDBQueue" />
+	<jee:jndi-lookup id="fproSenderQ" jndi-name="java:/queue/HELLOWORLDMDBQueue1" />
+	<jee:jndi-lookup id="imexReceiverQ" jndi-name="java:/queue/IMEXReceiveQ" />
 	<jee:jndi-lookup id="imexSenderQ" jndi-name="java:/queue/IMEXSendQ" />
 	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/MySqlDS"/>
 	<!--
@@ -46,14 +46,14 @@
 	  -->
 	<bean id="messageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
     	<property name="connectionFactory" ref ="mqConnectionFactory" />
-    	<property name="destination" ref ="receiverQ"/>
+    	<property name="destination" ref ="fproReceiverQ"/>
 		<property name="messageListener" ref ="fproMessageListener"/>
 		<property name="concurrentConsumers" value="1" />
 		<property name="maxConcurrentConsumers" value="1" />
     </bean>
 	<bean id="IMEXmessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
     	<property name="connectionFactory" ref ="mqConnectionFactory" />
-    	<property name="destination" ref ="IMEXreceiverQ"/>
+    	<property name="destination" ref ="imexReceiverQ"/>
 		<property name="messageListener" ref ="IMEXMessageListener"/>
 		<property name="concurrentConsumers" value="1" />
 		<property name="maxConcurrentConsumers" value="1" />
@@ -63,7 +63,7 @@
 		the Queue that we want to send messages to -->
 	<bean id="fproMessageSender" class="com.dbs.trade.dupcheck.jms.FPROMessageSender">
 		<property name="jmsTemplate" ref="jmsTemplate"/>
-		<property name="senderQ" ref="senderQ"/>
+		<property name="fproSenderQ" ref="fproSenderQ"/>
 	</bean>
 	<bean id="imexMessageSender" class="com.dbs.trade.dupcheck.jms.IMEXMessageSender">
 		<property name="jmsTemplate" ref="jmsTemplate"/>

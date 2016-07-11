@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FPROMessageSender {
 	private JmsTemplate jmsTemplate;
-	private Queue senderQ;
+	private Queue fproSenderQ;
 	private static final Logger logger = Logger.getLogger(FPROMessageSender.class);
 
 	/**
@@ -25,8 +25,8 @@ public class FPROMessageSender {
 	 *             the jMS exception
 	 */
 	public void sendMessage(String message) throws JMSException {
-		logger.debug("About to put message on queue. Queue[" + senderQ.toString() + "] Message[" + message + "]");
-		jmsTemplate.convertAndSend(senderQ, message);
+		logger.debug("About to put message on queue. Queue[" + fproSenderQ.toString() + "] Message[" + message + "]");
+		jmsTemplate.convertAndSend(fproSenderQ, message);
 		System.out.println("Sent message" + message);
 	}
 
@@ -46,7 +46,7 @@ public class FPROMessageSender {
 	 * @param queue
 	 *            the new test queue
 	 */
-	public void setSenderQ(Queue queue) {
-		this.senderQ = queue;
+	public void setFproSenderQ(Queue queue) {
+		this.fproSenderQ = queue;
 	}
 }
