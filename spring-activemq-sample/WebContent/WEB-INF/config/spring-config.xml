@@ -19,6 +19,8 @@
 	<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:/ConnectionFactory" />
 	<jee:jndi-lookup id="receiverQ" jndi-name="java:/queue/HELLOWORLDMDBQueue" />
 	<jee:jndi-lookup id="senderQ" jndi-name="java:/queue/HELLOWORLDMDBQueue1" />
+	<jee:jndi-lookup id="IMEXreceiverQ" jndi-name="java:/queue/IMEXReceiveQ" />
+	<jee:jndi-lookup id="imexSenderQ" jndi-name="java:/queue/IMEXSendQ" />
 	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/MySqlDS"/>
 	<!--
 	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/MariaDBDS"/>
@@ -31,7 +33,10 @@
     	<property name="fproMessageSender" ref ="fproMessageSender" />
     	<property name="studentJDBCTemplate" ref ="studentJDBCTemplate" />
     </bean>
-
+	<bean id="IMEXMessageListener" class="com.dbs.trade.dupcheck.jms.IMEXMessageListener">
+    	<property name="imexMessageSender" ref ="imexMessageSender" />
+    	<property name="studentJDBCTemplate" ref ="studentJDBCTemplate" />
+    </bean>
 	<!-- 1. connectionFactory - the connection factory definition used to connect to the Message Broker
 	     2. destination - the Queue which the MessageListener container is listening on from incoming messages
 	     3. messageListener - the implementation class that will actually handle the incoming messages. The
@@ -46,14 +51,24 @@
 		<property name="concurrentConsumers" value="1" />
 		<property name="maxConcurrentConsumers" value="1" />
     </bean>
-
+	<bean id="IMEXmessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    	<property name="connectionFactory" ref ="mqConnectionFactory" />
+    	<property name="destination" ref ="IMEXreceiverQ"/>
+		<property name="messageListener" ref ="IMEXMessageListener"/>
+		<property name="concurrentConsumers" value="1" />
+		<property name="maxConcurrentConsumers" value="1" />
+    </bean>
+    
 	<!-- MessageSender is a simple POJO that we supply with a JMSTemplate and 
 		the Queue that we want to send messages to -->
 	<bean id="fproMessageSender" class="com.dbs.trade.dupcheck.jms.FPROMessageSender">
 		<property name="jmsTemplate" ref="jmsTemplate"/>
 		<property name="senderQ" ref="senderQ"/>
 	</bean>
-
+	<bean id="imexMessageSender" class="com.dbs.trade.dupcheck.jms.IMEXMessageSender">
+		<property name="jmsTemplate" ref="jmsTemplate"/>
+		<property name="imexSenderQ" ref="imexSenderQ"/>
+	</bean>
 	<!-- JMSTemplate is a Spring template that allows us to communicate with 
 		a message broker via JMS. JMSTemplate takes care of boiler plate code such 
 		as exception handling and resource management such as connection pooling. 

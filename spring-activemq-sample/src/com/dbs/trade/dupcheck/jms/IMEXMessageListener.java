@@ -15,12 +15,12 @@ import com.dbs.trade.dupcheck.dataaccess.StudentJDBCTemplate;
  *
  * @see PointOfIssueMessageEvent
  */
-public class FPROMessageListener implements MessageListener {
+public class IMEXMessageListener implements MessageListener {
 
-	private FPROMessageSender fproMessageSender;
+	private IMEXMessageSender imexMessageSender;
 	private StudentJDBCTemplate studentJDBCTemplate;
 
-	private static final Logger logger = Logger.getLogger(FPROMessageListener.class);
+	private static final Logger logger = Logger.getLogger(IMEXMessageListener.class);
 
 	/**
 	 * Method implements JMS onMessage and acts as the entry point for messages
@@ -35,10 +35,10 @@ public class FPROMessageListener implements MessageListener {
 		if (message instanceof TextMessage) {
 			try {
 				String msgText = ((TextMessage) message).getText();
-				logger.info("About to process FPRO message: " + msgText);
+				logger.info("About to process IMEX message: " + msgText);
 
 				/* call message sender to put message onto second queue */
-				fproMessageSender.sendMessage(msgText);
+				imexMessageSender.sendMessage(msgText);
 				studentJDBCTemplate.create(msgText, 101);
 
 			} catch (JMSException jmsEx_p) {
@@ -58,8 +58,8 @@ public class FPROMessageListener implements MessageListener {
 	 * @param messageSender
 	 *            the new message sender
 	 */
-	public void setFproMessageSender(FPROMessageSender messageSender) {
-		this.fproMessageSender = messageSender;
+	public void setImexMessageSender(IMEXMessageSender messageSender) {
+		this.imexMessageSender = messageSender;
 	}
 
 	public StudentJDBCTemplate getStudentJDBCTemplate() {
