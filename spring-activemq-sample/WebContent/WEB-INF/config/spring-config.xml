@@ -14,11 +14,11 @@
 
 
 	<!-- Use Springs JNDI support to look up JMS Connection Factory and Queue 
-		definitions from the container. This means that specific connection details 
-		are not embedded in the application -->
+		definitions from the container. Connection details are not embedded in the 
+		application -->
 	<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:/ConnectionFactory" />
-	<jee:jndi-lookup id="fproReceiverQ" jndi-name="java:/queue/HELLOWORLDMDBQueue" />
-	<jee:jndi-lookup id="fproSenderQ" jndi-name="java:/queue/HELLOWORLDMDBQueue1" />
+	<jee:jndi-lookup id="fproReceiverQ" jndi-name="java:/queue/FPROReceiveQ" />
+	<jee:jndi-lookup id="fproSenderQ" jndi-name="java:/queue/FPROSendQ" />
 	<jee:jndi-lookup id="imexReceiverQ" jndi-name="java:/queue/IMEXReceiveQ" />
 	<jee:jndi-lookup id="imexSenderQ" jndi-name="java:/queue/IMEXSendQ" />
 	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/MySqlDS"/>
@@ -33,7 +33,7 @@
     	<property name="fproMessageSender" ref ="fproMessageSender" />
     	<property name="studentJDBCTemplate" ref ="studentJDBCTemplate" />
     </bean>
-	<bean id="IMEXMessageListener" class="com.dbs.trade.dupcheck.jms.IMEXMessageListener">
+	<bean id="imexMessageListener" class="com.dbs.trade.dupcheck.jms.IMEXMessageListener">
     	<property name="imexMessageSender" ref ="imexMessageSender" />
     	<property name="studentJDBCTemplate" ref ="studentJDBCTemplate" />
     </bean>
@@ -54,13 +54,12 @@
 	<bean id="IMEXmessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
     	<property name="connectionFactory" ref ="mqConnectionFactory" />
     	<property name="destination" ref ="imexReceiverQ"/>
-		<property name="messageListener" ref ="IMEXMessageListener"/>
+		<property name="messageListener" ref ="imexMessageListener"/>
 		<property name="concurrentConsumers" value="1" />
 		<property name="maxConcurrentConsumers" value="1" />
     </bean>
-    
-	<!-- MessageSender is a simple POJO that we supply with a JMSTemplate and 
-		the Queue that we want to send messages to -->
+
+	<!-- MessageSenders -->
 	<bean id="fproMessageSender" class="com.dbs.trade.dupcheck.jms.FPROMessageSender">
 		<property name="jmsTemplate" ref="jmsTemplate"/>
 		<property name="fproSenderQ" ref="fproSenderQ"/>
